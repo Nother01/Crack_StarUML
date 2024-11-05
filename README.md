@@ -1,7 +1,7 @@
 
-# Crack StarUML
+# Crack StarUML | 6.2.2 | 6.3.0
 
-This script is designed to remove license restrictions for **StarUML version 6.2.2**, including the removal of watermarks on exports.
+This script is designed to remove license restrictions for **StarUML tested in versions 6.2.2 and 6.3.0**, including the removal of watermarks on exports.
 
 ## Prerequisites
 1.  **Sudo Permissions**: Required if StarUML is installed in `/opt`.
@@ -26,7 +26,7 @@ Run the script with or without specifying the path to the StarUML installation f
 	  ```
     sudo ./starUML.sh /path/to/StarUML
 	```
-
+\
 **Output**	
 ```
 StarUML directory provided: /opt/StarUML
@@ -34,7 +34,8 @@ StarUML directory provided: /opt/StarUML
 [1] Navigated to /opt/StarUML/resources
 [2] Checking if asar is already installed...
 [3] Extracting app.asar...
-[4] Checking StarUML version expected: 6.2.2...
+[4] Checking StarUML version. Tested versions for this patch: 6.2.2 6.3.0
+        -> Version found in package.json: 6.3.0
 [5] Copying files from /home/StarUMLCrack/patch to /opt/StarUML/resources/app/src/engine...
 [6] Packing app.asar...
 

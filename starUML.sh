@@ -39,21 +39,21 @@ pack_asar() {
 
 check_version() {
   local package_json_path="$1/app/package.json"
-  local expected_version="$2"
+  local tested_versions=("6.2.2" "6.3.0")
   
   if [ -f "$package_json_path" ]; then
     local version=$(grep -oP '"version": *"\K[^"]+' "$package_json_path")
-    echo "[4] Checking StarUML version expected: $expected_version..."
+    echo "[4] Checking StarUML version. Tested versions for this patch: ${tested_versions[*]}"
+    echo -e "\t-> Version found in package.json: $version"
     
-    if [ "$version" != "$expected_version" ]; then
-      echo "The version found in package.json is $version."
-      read -p "Do you want to continue with the patch? (Y/N, default is Y): " choice
+    if [[ ! " ${tested_versions[@]} " =~ " $version " ]]; then
+      echo -e "\t-> $version is not among the tested versions."
+      read -p "Do you want to try with the patch? (Y/N, default is Y): " choice
       choice=${choice:-Y}
-      case "$choice" in
-        [Yy]* ) echo "Continuing with the patch...";;
-        [Nn]* ) echo "Exiting."; exit 1;;
-        * ) echo "Invalid input. Exiting."; exit 1;;
-      esac
+      if [[ "$choice" =~ ^[Nn]$ ]]; then
+        echo "Exiting."
+        exit 1
+      fi
     fi
   else
     echo "package.json not found at $package_json_path!"
@@ -84,7 +84,7 @@ navigate_to "$resources_dir"
 npm_check_and_install "asar"
 extract_asar
 
-check_version "$resources_dir" "6.2.2"
+check_version "$resources_dir"
 
 copy_files "$script_dir/patch" "$resources_dir/app/src/engine"
 pack_asar
